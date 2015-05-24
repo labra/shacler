@@ -3,7 +3,7 @@ package es.weso.shacler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -11,6 +11,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 public class Cli {
+
  private static final Logger log = Logger.getLogger(Cli.class.getName());
  private String[] args = null;
  private Options options = new Options();
@@ -20,12 +21,13 @@ public class Cli {
   this.args = args;
 
   options.addOption("h", "help", false, "show help.");
-  options.addOption("v", "var", true, "Here you can set parameter .");
+  options.addOption("s", "schema", true, "Schema");
+  options.addOption("f", "schema-format", true, "Schema format (SHACL, TURTLE, ...)");
 
  }
 
  public void parse() {
-  CommandLineParser parser = new BasicParser();
+  CommandLineParser parser = new DefaultParser();
 
   CommandLine cmd = null;
   try {
@@ -34,13 +36,11 @@ public class Cli {
    if (cmd.hasOption("h"))
     help();
 
-   if (cmd.hasOption("v")) {
-    log.log(Level.INFO, "Using cli argument -v=" + cmd.getOptionValue("v"));
+   if (cmd.hasOption("s")) {
+    log.log(Level.INFO, "Using argument -s=" + cmd.getOptionValue("s"));
     // Whatever you want to do with the setting goes here
-   } else {
-    log.log(Level.SEVERE, "MIssing v option");
-    help();
-   }
+   } 
+   
 
   } catch (ParseException e) {
    log.log(Level.SEVERE, "Failed to parse comand line properties", e);
