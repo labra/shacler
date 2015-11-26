@@ -25,15 +25,23 @@ public class SHACLer {
 			
 			verbose = options.verbose;
 			
-			String contents = new String(Files.readAllBytes(Paths
-					.get(options.schema)));
+			switch (options.processor) {
+			case "shex": 
+				String contents = new String(Files.readAllBytes(Paths
+						.get(options.schema)));
+				
+				Schema schema = Schema.fromString(contents, options.schemaFormat)
+						.get()._1();
+				
+				String output = schema.serialize(options.outputSchemaFormat);
+				
+				System.out.print(output);
+				break;
+			case "shacl":
+				System.out.print("SHACL");
+				break;
+			}
 			
-			Schema schema = Schema.fromString(contents, options.schemaFormat)
-					.get()._1();
-			
-			String output = schema.serialize(options.outputSchemaFormat);
-			
-			System.out.print(output);
 			
 			Instant end = Instant.now();
 			if (options.printTime) printTime(start,end);

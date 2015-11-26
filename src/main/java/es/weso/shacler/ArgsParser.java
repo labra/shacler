@@ -18,6 +18,7 @@ public class ArgsParser {
 	public String data = null;
 	public String schemaFormat = "SHEXC";
 	public String outputSchemaFormat = "SHEXC";
+	public String processor = "shex";
 	public Boolean printTime = false;
 	public Boolean verbose = false;
 
@@ -39,6 +40,7 @@ public class ArgsParser {
 		options.addOption("f", "schema-format", WithArg,"Schema format (SHACL, TURTLE, ...)");
 		options.addOption("o", "output-schema-format", WithArg,"Output schema format (SHACL, TURTLE, ...)");
 		options.addOption("v", "verbose", NoArg,"Verbose mode");
+		options.addOption("p", "processor", WithArg, "Processor: (shacl, shex)");
 		options.addOption("t", "time", NoArg,"Print processing time at the end");
 	}
 	
@@ -74,6 +76,10 @@ public class ArgsParser {
 				outputSchemaFormat = cmd.getOptionValue("o");
 			}
 
+			if (cmd.hasOption("p")) {
+				processor = cmd.getOptionValue("p");
+			}
+			
 			if (cmd.hasOption("v")) {
 				verbose = true;
 			}
